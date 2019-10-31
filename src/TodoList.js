@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import { Input, Button } from 'antd'
 import 'antd/dist/antd.css'
 import { connect } from 'react-redux'
+import { changeInput } from './store/actionCreators'
 
 class TodoList extends Component {
-    constructor(props) {
-        super(props);
-    }
     render() { 
         return ( 
             <div style={{margin: '10px'}}>
@@ -15,6 +13,7 @@ class TodoList extends Component {
                         placeholder='dd'
                         style={{ width: '200px', marginRight: '10px' }}
                         value={this.props.inputValue}
+                        onChange={this.props.inputChange}
                     />
                     <Button type='primary'>Submit</Button>
                 </div>
@@ -33,6 +32,14 @@ const stateToProps = (state) => {
         inputValue: state.inputValue //reducer里面的默认值。
     }
 }
+const dispatchToProps = (dispatch) => {
+    return {
+        inputChange(e) {
+            const action = changeInput(e.target.value)
+            dispatch(action)
+        }
+    }
+}
 //把TodoList组件中用到的state的值,进行隐射
 //组件中这样使用即可: this.props.inputValue
-export default connect(stateToProps,null)(TodoList);
+export default connect(stateToProps, dispatchToProps)(TodoList);
