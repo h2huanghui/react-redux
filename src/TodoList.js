@@ -1,37 +1,66 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Input, Button } from 'antd'
 import 'antd/dist/antd.css'
 import { connect } from 'react-redux'
 import { changeInput, addItemList, deleteItemList } from './store/actionCreators'
 
-class TodoList extends Component {
-    render() {
-        return (
-            <div style={{ margin: '10px' }}>
-                <div>
-                    <Input
-                        placeholder='dd'
-                        style={{ width: '200px', marginRight: '10px' }}
-                        value={this.props.inputValue}
-                        onChange={this.props.inputChange}
-                    />
-                    <Button type='primary' onClick={this.props.handleAddItem}>Submit</Button>
-                </div>
-                <div>
-                    <ul>
-                        {
-                            this.props.list.map((item, index) => {
-                                return (
-                                    <li key={index} onClick={this.props.deleteItemList.bind(this,index)}>{item}</li>
-                                )
-                            })
-                        }
-                    </ul>
-                </div>
+const TodoList = (props) => {
+    let { inputValue, inputChange, handleAddItem, list, deleteItemList } = props
+    return (
+        <div style={{ margin: '10px' }}>
+            <div>
+                <Input
+                    placeholder='dd'
+                    style={{ width: '200px', marginRight: '10px' }}
+                    value={inputValue}
+                    onChange={inputChange}
+                />
+                <Button type='primary' onClick={handleAddItem}>Submit</Button>
             </div>
-        );
-    }
+            <div>
+                <ul>
+                    {
+                        list.map((item, index) => {
+                            return (
+                                <li key={index} onClick={deleteItemList.bind(this, index)}>{item}</li>
+                            )
+                        })
+                    }
+                </ul>
+            </div>
+        </div>
+    )
 }
+
+// class TodoList extends Component {
+//     render() {
+//         let { inputValue, inputChange, handleAddItem, list, deleteItemList } = this.props
+//         return (
+//             <div style={{ margin: '10px' }}>
+//                 <div>
+//                     <Input
+//                         placeholder='dd'
+//                         style={{ width: '200px', marginRight: '10px' }}
+//                         value={inputValue}
+//                         onChange={inputChange}
+//                     />
+//                     <Button type='primary' onClick={handleAddItem}>Submit</Button>
+//                 </div>
+//                 <div>
+//                     <ul>
+//                         {
+//                             list.map((item, index) => {
+//                                 return (
+//                                     <li key={index} onClick={deleteItemList.bind(this, index)}>{item}</li>
+//                                 )
+//                             })
+//                         }
+//                     </ul>
+//                 </div>
+//             </div>
+//         );
+//     }
+// }
 
 const stateToProps = (state) => {
     return {
